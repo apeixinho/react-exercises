@@ -1,18 +1,18 @@
 import axios from 'axios';
 
+const defaultUser = 'github';
 const id = "YOUR_CLIENT_ID";
 const sec = "YOUR_SECRET_ID";
-const params = "?client_id=" + id + "&client_secret=" + sec;
+const params = `?client_id=${id}&client_secret=${sec}`;
 
-function getProfile(username) {
-  return axios.get("https://api.github.com/users/" + username + params)
+function getProfile(username = defaultUser) {
+  return axios.get(`https://api.github.com/users/${username}${params}`)
     .then((user) => user.data);
 }
 
-function getRepositories(username) {
+function getRepositories(username = defaultUser) {
   return axios.get(
-    "https://api.github.com/users/" + username +
-    "/repos" + params + "&per_page=100")
+    `https://api.github.com/users/${username}/repos${params}&per_page=100`)
 }
 
 function getStartCount(repositories) {
@@ -39,7 +39,7 @@ function getUserData(player) {
     const profile = data[0];
     const repos = data[1];
     return {
-      profile: profile,
+      profile,
       score: calculateScore(profile, repos)
     }
   });
@@ -56,7 +56,7 @@ export function battle(players) {
 }
 
 export function fetchPopularRepos(language) {
-  const encodedURI = window.encodeURI('https://api.github.com/search/repositories?q=stars:>1+language:' + language + '&sort=stars&order=desc&type=Repositories');
+  const encodedURI = window.encodeURI(`https://api.github.com/search/repositories?q=stars:>1+language:${language}&sort=stars&order=desc&type=Repositories`);
 
   return axios.get(encodedURI)
     .then((response) => response.data.items);

@@ -74,8 +74,8 @@ class Battle extends React.Component {
   handleReset(id) {
     this.setState(() => {
       var newState = {};
-      newState[id + 'Name'] = '';
-      newState[id + 'Image'] = null;
+      newState[`${id}Name`] = '';
+      newState[`${id}Image`] = null;
       return newState;
     });
   }
@@ -83,8 +83,8 @@ class Battle extends React.Component {
   handleSubmit(id, username) {
     this.setState(() => {
       var newState = {};
-      newState[id + 'Name'] = username;
-      newState[id + 'Image'] = 'https://github.com/' + username + '.png?size=200';
+      newState[`${id}Name`] = username;
+      newState[`${id}Image`] = `https://github.com/${username}.png?size=200`;
       return newState;
     });
   }
@@ -136,8 +136,8 @@ class Battle extends React.Component {
           playerOneImage && playerTwoImage &&
           <Link className='button'
                 to={{
-                    pathname: match.url + '/results',
-                    search: `?playerOneName=` + playerOneName + `&playerTwoName=` + playerTwoName
+                    pathname: `${match.url}/results`,
+                    search: `?playerOneName=${playerOneName}&playerTwoName=${playerTwoName}`
                   }}>
             Battle
           </Link>

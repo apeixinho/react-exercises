@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Loading from './Loading';
 import {fetchPopularRepos} from '../utils/api';
 
-function SelectLanguage(props) {
+function SelectLanguage({selectedLanguage,onSelect}) {
   const languages = ['All', 'JavaScript', 'Ruby', 'Java', 'CSS', 'Python'];
   return (
     <ul className='languages'>
@@ -11,8 +11,8 @@ function SelectLanguage(props) {
         languages.map((lang) => {
           return (
             <li
-              style={lang === props.selectedLanguage ? {color: '#d0021b'} : null}
-              onClick={props.onSelect.bind(null, lang)}
+              style={lang === selectedLanguage ? {color: '#d0021b'} : null}
+              onClick={onSelect.bind(null, lang)}
               key={lang}>
               {lang}
             </li>
@@ -36,7 +36,7 @@ function RepoGrid(props) {
                   <img
                     className='avatar'
                     src={repo.owner.avatar_url}
-                    alt={'Avatar for ' + repo.owner.login}
+                    alt={`Avatar for ${repo.owner.login}`}
                   />
                 </li>
                 <li><a href={repo.html_url}>{repo.name}</a></li>
@@ -52,20 +52,20 @@ function RepoGrid(props) {
 }
 
 RepoGrid.propTypes = {
-  repos: PropTypes.array.isRequired,
+  repos: PropTypes.array.isRequired
 }
 
 SelectLanguage.propTypes = {
   selectedLanguage: PropTypes.string.isRequired,
-  onSelect: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired
 };
 
 class Popular extends React.Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {
       selectedLanguage: 'All',
-      repos: null,
+      repos: null
     };
 
     this.updateLanguage = this.updateLanguage.bind(this);
@@ -87,7 +87,7 @@ class Popular extends React.Component {
       .then((repos) => {
         this.setState(() => {
           return {
-            repos: repos
+            repos
           }
         });
       });

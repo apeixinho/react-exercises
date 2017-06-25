@@ -18,7 +18,7 @@ class PlayerInput extends React.Component {
 
   handleChange(event) {
     var value = event.target.value;
-    this.setState(function () {
+    this.setState(() => {
       return {
         username: value
       }
@@ -72,7 +72,7 @@ class Battle extends React.Component {
   }
 
   handleReset(id) {
-    this.setState(function () {
+    this.setState(() => {
       var newState = {};
       newState[id + 'Name'] = '';
       newState[id + 'Image'] = null;
@@ -81,7 +81,7 @@ class Battle extends React.Component {
   }
 
   handleSubmit(id, username) {
-    this.setState(function () {
+    this.setState(() => {
       var newState = {};
       newState[id + 'Name'] = username;
       newState[id + 'Image'] = 'https://github.com/' + username + '.png?size=200';

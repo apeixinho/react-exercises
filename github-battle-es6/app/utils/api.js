@@ -31,33 +31,41 @@ function handleError(error) {
   return null;
 }
 
-function getUserData(player) {
-  return axios.all([
-    getProfile(player),
-    getRepositories(player)
-  ]).then((data) => {
-    const profile = data[0];
-    const repos = data[1];
+async function getUserData(player) {
+  try {
+    const userData = await Promise.all([getProfile(player), getRepositories(player)]);
+    const [profile, repos] = userData;
     return {
       profile,
       score: calculateScore(profile, repos)
-    }
-  });
+    };
+  } catch (error) {
+    console.warn("Error in getUserData", error);
+
+  }
 }
 
 function sortPlayers(players) {
   return players.sort((a, b) => b.score - a.score);
 }
 
-export function battle(players) {
-  return axios.all(players.map(getUserData))
-    .then(sortPlayers)
-    .catch(handleError);
+export async function battle(players) {
+  try {
+    const usersData = await Promise.all(players.map(getUserData));
+    return sortPlayers(usersData);
+  } catch (error) {
+    console.warn("Error in battle", error);
+  }
+
 }
 
-export function fetchPopularRepos(language) {
+export async function fetchPopularRepos(language) {
   const encodedURI = window.encodeURI(`https://api.github.com/search/repositories?q=stars:>1+language:${language}&sort=stars&order=desc&type=Repositories`);
 
-  return axios.get(encodedURI)
-    .then((response) => response.data.items);
+  try {
+    const response = await axios.get(encodedURI);
+    return response.data.items;
+  } catch (error) {
+    console.warn("Error in fetchPopularRepos", error);
+  }
 }

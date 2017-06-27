@@ -67,13 +67,15 @@ class Results extends React.Component {
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     var players = queryString.parse(this.props.location.search);
 
-    battle([
-      players.playerOneName,
-      players.playerTwoName
-    ]).then((results) => {
+    try {
+      const results = await battle([
+        players.playerOneName,
+        players.playerTwoName
+      ]);
+
       if (results === null) {
         return this.setState(() => {
           return {
@@ -90,8 +92,9 @@ class Results extends React.Component {
           loading: false
         }
       });
-
-    });
+    } catch (error) {
+      console.warn("Error on the Results container");
+    }
   }
 
   render() {

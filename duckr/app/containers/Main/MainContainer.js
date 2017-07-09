@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {Component} from 'react'
 
-const MainContainer = React.createClass({
-  render(){
+class MainContainer extends Component {
+  render () {
     return (
-      <p>Hello World!</p>
+      <p>{'Hello World!'}</p>
     )
   }
-});
+}
 
-export default MainContainer;
+export default MainContainer

@@ -38,6 +38,9 @@ const base = {
       {test: /\.css$/, loader: 'style!css?sourceMap&modules&localIdentName=[name]__[local]___[hash:base64:5]'}
     ]
   },
+  resolveLoader: {
+    moduleExtensions: ["-loader"]
+  },
   resolve: {
     modules: [
       path.join(__dirname, "./app"),

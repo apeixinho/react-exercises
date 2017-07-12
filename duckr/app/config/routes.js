@@ -1,6 +1,6 @@
 import React from 'react'
-import { Router, Route, HashRouter, Switch } from 'react-router-dom'
-import { MainContainer, HomeContainer } from 'containers'
+import { Router, HashRouter, Route, BrowserRouter, Switch } from 'react-router-dom'
+import { MainContainer, HomeContainer, AuthenticateContainer } from 'containers'
 
 const routes = (
   <HashRouter>

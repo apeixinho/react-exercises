@@ -1,18 +1,24 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import { Router, Route, HashRouter, Switch } from 'react-router-dom'
+import { connect } from 'react-redux'
 import { Navigation } from 'components'
-import { HomeContainer, AuthenticateContainer } from 'containers'
+import { HomeContainer, AuthenticateContainer, FeedContainer,LogoutContainer } from 'containers'
 import { container, innerContainer } from './MainContainer.css'
+import restricted from 'hoc/restricted'
 
 class MainContainer extends Component {
-  render () {
+  render() {
+    const { checkAuth } = this.props;
     return (
       <div className={container}>
-        <Navigation isAuthed={false}/>
+        <Navigation isAuthed={this.props.isAuthed}/>
         <div className={innerContainer}>
           <Switch>
-            <Route path='/auth' component={AuthenticateContainer}/>
-            <Route component={HomeContainer}/>
+            <Route path='/auth' component={restricted(AuthenticateContainer)}/>
+            <Route path='/feed' component={restricted(FeedContainer)}/>
+            <Route path='/logout' component={LogoutContainer}/>
+            <Route component={restricted(HomeContainer)}/>
           </Switch>
         </div>
       </div>
@@ -20,4 +26,15 @@ class MainContainer extends Component {
   }
 }
 
-export default MainContainer
+MainContainer.propTypes = {
+  isAuthed: PropTypes.bool.isRequired
+}
+
+function mapStateToProps(state) {
+  const { isAuthed } = state;
+  return {
+    isAuthed
+  }
+}
+
+export default connect(mapStateToProps)(MainContainer)

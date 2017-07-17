@@ -9,3 +9,13 @@ export default function auth() {
     }, 2000)
   })
 }
+
+export function checkIfAuthed(isAuthed) {
+  // Ignore firebase
+
+  return isAuthed;
+}
+
+export function logout() {
+  console.log('Logout');
+}

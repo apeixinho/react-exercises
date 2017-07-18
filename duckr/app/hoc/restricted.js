@@ -20,8 +20,12 @@ export default function restricted(BaseComponent) {
     }
 
     checkAuthentication(params) {
-      const { history } = params;
+      const { history, isFetching } = params;
       const isAuthed = checkIfAuthed(this.props.isAuthed);
+
+      if (isFetching === true) {
+        return;
+      }
 
       const nextPathName = params.location.pathname;
       if (nextPathName === '/' || nextPathName === '/auth') {
@@ -41,9 +45,10 @@ export default function restricted(BaseComponent) {
   }
 
   function mapStateToProps(state) {
-    const {isAuthed } = state;
+    const {isAuthed, isFetching } = state;
     return {
-      isAuthed
+      isAuthed,
+      isFetching
     }
   }
 

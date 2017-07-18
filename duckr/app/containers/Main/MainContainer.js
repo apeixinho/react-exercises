@@ -59,7 +59,12 @@ MainContainer.propTypes = {
 }
 
 function mapStateToProps(state) {
-  const { isAuthed, isFetching } = state;
+  const {
+    users:{
+      isAuthed,
+      isFetching
+      }
+    }= state;
   return {
     isAuthed,
     isFetching

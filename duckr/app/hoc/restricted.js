@@ -45,7 +45,12 @@ export default function restricted(BaseComponent) {
   }
 
   function mapStateToProps(state) {
-    const {isAuthed, isFetching } = state;
+    const {
+      users:{
+        isAuthed,
+        isFetching
+        }
+      }= state;
     return {
       isAuthed,
       isFetching

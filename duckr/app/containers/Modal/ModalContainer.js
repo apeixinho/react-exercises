@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as modalActionCreators from 'redux/modules/modal'
+import * as ducksActionCreators from 'redux/modules/ducks'
 import { Modal } from 'components'
 
 class ModalContainer extends Component {
@@ -24,7 +25,10 @@ function mapStateToProps({modal, users}) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(modalActionCreators, dispatch);
+  return bindActionCreators(
+    {...modalActionCreators, ...ducksActionCreators},
+    dispatch
+  );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalContainer)

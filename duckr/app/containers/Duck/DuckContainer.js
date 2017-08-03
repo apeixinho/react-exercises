@@ -4,7 +4,7 @@ import { Duck } from 'components'
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import * as feedActionCreators from 'redux/modules/feed'
+import * as usersLikesActionCreators from 'redux/modules/usersLikes'
 
 class DuckContainer extends Component {
 
@@ -62,5 +62,8 @@ function mapStateToProps(state, props) {
   }
 }
 
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(usersLikesActionCreators, dispatch);
+}
 
-export default withRouter(connect(mapStateToProps)(DuckContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DuckContainer));

@@ -10,7 +10,7 @@ import * as usersLikesActionCreators from 'redux/modules/usersLikes'
 import { formatUserInfo } from 'helpers/utils'
 import { firebaseAuth } from 'config/constants'
 import { Navigation } from 'components'
-import { HomeContainer, AuthenticateContainer, FeedContainer,LogoutContainer } from 'containers'
+import { HomeContainer, AuthenticateContainer, FeedContainer,LogoutContainer, UserContainer } from 'containers'
 import { container, innerContainer } from './MainContainer.css'
 import restricted from 'hoc/restricted'
 
@@ -45,7 +45,8 @@ class MainContainer extends Component {
             <Switch>
               <Route path='/auth' component={restricted(AuthenticateContainer)}/>
               <Route path='/feed' component={restricted(FeedContainer)}/>
-              <Route path='/logout' component={LogoutContainer}/>
+              <Route path='/:uid' component={LogoutContainer}/>
+              <Route path='/logout' component={restricted(UserContainer)}/>
               <Route component={restricted(HomeContainer)}/>
             </Switch>
           </div>

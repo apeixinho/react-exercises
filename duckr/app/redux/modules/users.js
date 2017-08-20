@@ -1,4 +1,5 @@
 import auth,{logout, saveUser} from 'helpers/auth'
+import { fetchUser } from 'helpers/api'
 import formatUserInfo from 'helpers/utils'
 
 const AUTH_USER = 'AUTH_USER';
@@ -98,6 +99,17 @@ function user(state = initialUserState, action) {
       }
     default :
       return state
+  }
+}
+
+export function fetchAndHandleUser(uid) {
+  return function (dispatch) {
+    debugger;
+    dispatch(fetchingUser())
+
+    return fetchUser(uid)
+      .then((user) => dispatch(fetchingUserSuccess(uid, user, Date.now())))
+      .catch((error) => dispatch(fetchingUserFailure(error)))
   }
 }
 

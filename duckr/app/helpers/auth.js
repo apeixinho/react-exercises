@@ -7,8 +7,7 @@ export default function auth() {
 
 export function checkIfAuthed(isAuthed) {
   // Ignore firebase
-
-  return isAuthed;
+  return isAuthed === true;
 }
 
 export function logout() {

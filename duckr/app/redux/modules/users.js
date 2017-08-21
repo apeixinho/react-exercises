@@ -104,7 +104,6 @@ function user(state = initialUserState, action) {
 
 export function fetchAndHandleUser(uid) {
   return function (dispatch) {
-    debugger;
     dispatch(fetchingUser())
 
     return fetchUser(uid)

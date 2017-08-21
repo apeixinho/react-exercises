@@ -45,8 +45,8 @@ class MainContainer extends Component {
             <Switch>
               <Route path='/auth' component={restricted(AuthenticateContainer)}/>
               <Route path='/feed' component={restricted(FeedContainer)}/>
-              <Route path='/:uid' component={LogoutContainer}/>
-              <Route path='/logout' component={restricted(UserContainer)}/>
+              <Route path='/:uid' component={restricted(UserContainer)}/>
+              <Route path='/logout' component={LogoutContainer}/>
               <Route component={restricted(HomeContainer)}/>
             </Switch>
           </div>

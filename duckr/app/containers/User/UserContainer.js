@@ -5,18 +5,17 @@ import { bindActionCreators } from 'redux'
 import { staleDucks, staleUser } from 'helpers/utils'
 import * as usersActionCreators from 'redux/modules/users'
 import * as usersDucksActionCreators from 'redux/modules/usersDucks'
+import { User } from 'components';
 
 
 class UserContainer extends Component {
 
   componentDidMount() {
-    const uid = this.props.routeParams.uid;
+    const uid = this.props.match.params.uid;
     if (this.props.noUser === true || staleUser(this.props.lastUpdated)) {
-      debugger;
       this.props.fetchAndHandleUser(uid)
     }
 
-    debugger;
     if (this.props.noUser === true || staleDucks(this.props.lastUpdated)) {
       this.props.fetchAndHandleUsersDucks(uid)
     }
@@ -41,16 +40,20 @@ UserContainer.propTypes = {
   error: PropTypes.string.isRequired,
   lastUpdated: PropTypes.number.isRequired,
   duckIds: PropTypes.array.isRequired,
-  routeParams: PropTypes.shape({uid: PropTypes.string.isRequired}),
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      uid: PropTypes.string.isRequired
+    })
+  }),
   fetchAndHandleUsersDucks: PropTypes.func.isRequired,
   fetchAndHandleUser: PropTypes.func.isRequired
 }
 
 function mapStateToProps({users, usersDucks}, props) {
-  const specificUsersDucks = usersDucks[props.routeParams.uid]
-  const user = users[props.routeParams.uid]
-  const noUser = typeof user === 'undefined'
-  const name = noUser ? '' : user.info.name
+  const specificUsersDucks = usersDucks[props.match.params.uid];
+  const user = users[props.match.params.uid];
+  const noUser = typeof user === 'undefined';
+  const name = noUser ? '' : user.info.name;
   return {
     noUser,
     name,

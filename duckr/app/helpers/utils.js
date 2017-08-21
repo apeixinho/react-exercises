@@ -1,3 +1,5 @@
+import { usersDucksExpirationLength, userExpirationLength } from 'config/constants'
+
 export function formatUserInfo(name, avatar, uid) {
   return {
     name,

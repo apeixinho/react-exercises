@@ -57,7 +57,6 @@ function usersDuck(state = initialUsersDuckState, action) {
 
 export function fetchAndHandleUsersDucks (uid) {
   return function (dispatch, getState) {
-    debugger;
     dispatch(fetchingUsersDucks())
 
     fetchUsersDucks(uid)

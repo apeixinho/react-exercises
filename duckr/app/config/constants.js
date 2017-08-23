@@ -2,12 +2,12 @@ import * as firebase from 'firebase'
 
 // Initialize Firebase
 const config = {
-  apiKey: "AIzaSyB1u9qeAM64NlmyjYD96Gn6hCgGGhGG_vw",
-  authDomain: "duckr-900ff.firebaseapp.com",
-  databaseURL: "https://duckr-900ff.firebaseio.com",
-  projectId: "duckr-900ff",
-  storageBucket: "duckr-900ff.appspot.com",
-  messagingSenderId: "194768112706"
+  apiKey: "YOUR_API_KEY_HERE",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  databaseURL: "https://YOUR_PROJECT.firebaseio.com",
+  projectId: "YOUR_PROJECT",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID"
 };
 
 firebase.initializeApp(config);
@@ -17,3 +17,4 @@ export const firebaseAuth = firebase.auth;
 
 export const usersDucksExpirationLength = 100000;
 export const userExpirationLength = 100000;
+export const repliesExpirationLength = 300000;

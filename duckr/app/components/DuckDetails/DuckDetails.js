@@ -1,16 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { DuckContainer } from 'containers'
+import { DuckContainer, RepliesContainer } from 'containers'
 import {
   mainContainer, container, content, repliesContainer,
   replyTextAreaContainer, replyTextArea } from './DuckDetails.css'
 import { subHeader, darkBtn, errorMsg } from 'sharedStyles/styles.css'
-import { RepliesContainer } from 'containers'
 import { formatReply } from 'helpers/utils'
 
 function Reply({submit}) {
   const handleSubmit = (e) => {
-    if (Reply.ref.value.length === 0) {
+    if (Reply.ref.value.length !== 0) {
       return submit(Reply.ref.value, e)
     }
     Reply.ref.value = ''
@@ -48,7 +47,7 @@ export default function DuckDetails({duckId, isFetching, authedUser, error, addA
           <Reply submit={(replyText) => addAndHandleReply(duckId, formatReply(authedUser, replyText))}/>
         </div>
         <div className={repliesContainer}>
-          REPLY SECTION
+          <RepliesContainer duckId={duckId}/>
         </div>
       </div>}
       {error ? <p className={errorMsg}>{error}</p> : null}

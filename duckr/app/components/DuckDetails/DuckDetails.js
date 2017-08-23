@@ -8,14 +8,36 @@ import { subHeader, darkBtn, errorMsg } from 'sharedStyles/styles.css'
 import { RepliesContainer } from 'containers'
 import { formatReply } from 'helpers/utils'
 
-DuckDetails.propTypes = {
-  authedUser: PropTypes.object.isRequired,
-  duckId: PropTypes.string.isRequired,
-  isFetching: PropTypes.bool.isRequired,
-  error: PropTypes.string.isRequired,
+function Reply({submit}) {
+  const handleSubmit = (e) => {
+    if (Reply.ref.value.length === 0) {
+      return submit(Reply.ref.value, e)
+    }
+    Reply.ref.value = ''
+  }
+
+  return (
+    <div className={replyTextAreaContainer}>
+      <textarea
+        className={replyTextArea}
+        ref={(ref) => (Reply.ref = ref)}
+        maxLength={140}
+        type='text'
+        placeholder='Your response'/>
+      <button
+        onClick={handleSubmit}
+        className={darkBtn}>
+        {'Submit'}
+      </button>
+    </div>
+  )
 }
 
-export default function DuckDetails({duckId, isFetching, authedUser, error}) {
+Reply.propTypes = {
+  submit: PropTypes.func.isRequired
+}
+
+export default function DuckDetails({duckId, isFetching, authedUser, error, addAndHandleReply}) {
   return (
     <div className={mainContainer}>
       {isFetching === true
@@ -23,7 +45,7 @@ export default function DuckDetails({duckId, isFetching, authedUser, error}) {
         : <div className={container}>
         <div className={content}>
           <DuckContainer duckId={duckId} hideLikeCount={false} hideReplyBtn={true}/>
-          MAKE REPLY
+          <Reply submit={(replyText) => addAndHandleReply(duckId, formatReply(authedUser, replyText))}/>
         </div>
         <div className={repliesContainer}>
           REPLY SECTION
@@ -32,4 +54,12 @@ export default function DuckDetails({duckId, isFetching, authedUser, error}) {
       {error ? <p className={errorMsg}>{error}</p> : null}
     </div>
   )
+}
+
+DuckDetails.propTypes = {
+  authedUser: PropTypes.object.isRequired,
+  duckId: PropTypes.string.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
+  addAndHandleReply: PropTypes.func.isRequired
 }

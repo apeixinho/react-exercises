@@ -40,45 +40,56 @@ export function listenToFeed(cb, errorCb) {
   }, errorCb);
 }
 
-export function fetchUsersLikes (uid) {
+export function fetchUsersLikes(uid) {
   return ref.child(`usersLikes/${uid}`).once('value')
     .then((snapshot) => snapshot.val() || {})
 }
 
-export function saveToUsersLikes (uid, duckId) {
+export function saveToUsersLikes(uid, duckId) {
   return ref.child(`usersLikes/${uid}/${duckId}`).set(true)
 }
 
-export function deleteFromUsersLikes (uid, duckId) {
+export function deleteFromUsersLikes(uid, duckId) {
   return ref.child(`usersLikes/${uid}/${duckId}`).set(null)
 }
 
-export function incrementNumberOfLikes (duckId) {
+export function incrementNumberOfLikes(duckId) {
   return ref.child(`likeCount/${duckId}`)
     .transaction((currentValue = 0) => currentValue + 1)
 }
 
-export function decrementNumberOfLikes (duckId) {
+export function decrementNumberOfLikes(duckId) {
   return ref.child(`likeCount/${duckId}`)
     .transaction((currentValue = 0) => currentValue - 1)
 }
 
-export function fetchUsersDucks (uid) {
+export function fetchUsersDucks(uid) {
   return ref.child(`usersDucks/${uid}`).once('value')
     .then((snapshot) => snapshot.val() || {})
 }
 
-export function fetchUser (uid) {
+export function fetchUser(uid) {
   return ref.child(`users/${uid}`).once('value')
     .then((snapshot) => snapshot.val())
 }
 
-export function fetchDuck (duckId) {
+export function fetchDuck(duckId) {
   return ref.child(`ducks/${duckId}`).once('value')
     .then((snapshot) => snapshot.val())
 }
 
-export function fetchLikeCount (duckId) {
+export function fetchLikeCount(duckId) {
   return ref.child(`likeCount/${duckId}`).once('value')
     .then((snapshot) => snapshot.val() || 0)
+}
+
+export function postReply(duckId, reply) {
+  const replyId = ref.child(`replies/${duckId}`).push().key;
+  const replyWithId = {...reply, replyId};
+  const replyPromise = ref.child(`replies/${duckId}/${replyId}`).set(replyWithId);
+
+  return {
+    replyWithId,
+    replyPromise,
+  }
 }
